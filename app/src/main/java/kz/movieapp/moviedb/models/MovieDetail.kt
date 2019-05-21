@@ -16,11 +16,12 @@ data class MovieDetail(
     val releaseDate: String,
     val runtime: Int,
     @SerializedName("genres")
-    val genres: List<Genre>)  {
+    val genres: List<Genre>,
+    @SerializedName("production_companies")
+    val companies: List<Company>
+) {
 
-
-    fun getPosterUrl(): String
-    {
+    fun getPosterUrl(): String {
         return "http://image.tmdb.org/t/p/w342$posterPath"
     }
 }

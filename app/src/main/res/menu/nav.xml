@@ -5,4 +5,12 @@
           android:title="@string/action_settings"
           android:orderInCategory="100"
           app:showAsAction="never"/>
+    <item android:id="@+id/action28"
+          android:title="Перевод на русский язык"
+          app:showAsAction="never" />
+    <item android:id="@+id/search"
+          android:title="Поиск"
+          android:icon="@drawable/ic_menu_gallery"
+          app:actionViewClass="android.widget.SearchView"
+          app:showAsAction="collapseActionView|ifRoom"/>
 </menu>

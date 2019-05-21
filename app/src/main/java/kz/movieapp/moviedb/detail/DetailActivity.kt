@@ -9,11 +9,12 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.content_overview.*
-import kotlinx.android.synthetic.main.movie_wrapper.*
+import kotlinx.android.synthetic.main.item_movie.*
+
 import kz.movieapp.moviedb.App
 import kz.movieapp.moviedb.BuildConfig
 import kz.movieapp.moviedb.R
+import kz.movieapp.moviedb.models.Company
 import kz.movieapp.moviedb.models.MovieDetail
 import kz.movieapp.moviedb.models.Videos
 import javax.inject.Inject
@@ -32,13 +33,12 @@ class DetailActivity : AppCompatActivity(), DetailView {
         initLayout()
         presenter.setView(this, id)
 
-//        (this.applicationContext as App).welcoming(this, watch_trailer, "Trailer!", "Tap to watch the movie trailer")
     }
 
     private fun setupToolbar(){
 //        setSupportActionBar(appbar)
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        collapsingToolbar.setExpandedTitleMargin(50, 50, 250, 50)
+//        collapsingToolbar.setExpandedTitleMargin(50, 50, 250, 50)
     }
 
     override fun showMovieDetails(movies: MovieDetail?) {
@@ -53,26 +53,27 @@ class DetailActivity : AppCompatActivity(), DetailView {
         if (rateAvg != null) {
             rating_bar.rating = rateAvg.toFloat()
         }
-        Glide.with(this)
-            .load(movies?.getPosterUrl())
-            .into(poster)
-        (genre_list.adapter as GenreAdapter).addGenre(movies?.genres)
+
+        Glide.with(this).load(movies?.getPosterUrl()).into(image_detail)
+//        (genre_list.adapter as GenreAdapter).addGenre(movies?.genres)
+        (company_list.adapter as CompanyAdapter).addcompany(movies?.companies)
+//        CompanyAdapter().addcompany(movies?.companies)
     }
 
     override fun getVideos(videos: List<Videos>?) {
         val key = videos?.get(0)?.key
-        watch_trailer.setOnClickListener {
+        youtube_video.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.YOUTUBE+key))
             startActivity(intent)
         }
     }
 
     private fun initLayout() {
-        genre_list.setHasFixedSize(true)
+        company_list.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        genre_list.layoutManager = layoutManager
-        genre_list.setHasFixedSize(true)
-        genre_list.adapter = GenreAdapter()
+        company_list.layoutManager = layoutManager
+        company_list.setHasFixedSize(true)
+        company_list.adapter = CompanyAdapter()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

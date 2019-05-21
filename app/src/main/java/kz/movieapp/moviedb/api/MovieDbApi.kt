@@ -1,5 +1,6 @@
 package kz.movieapp.moviedb.api
 
+import kz.movieapp.moviedb.models.Movie
 import kz.movieapp.moviedb.models.MovieDetail
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,6 +16,12 @@ interface MovieDbApi {
 
     @GET("movie/popular")
     fun getPopularMovie(@QueryMap map : Map<String, String>): Observable<MovieResponse>
+
+    @GET("discover/movie")
+    fun getGenreFilter(@QueryMap map : Map<String, String>): Observable<MovieResponse>
+
+    @GET("movie/latest")
+    fun getLatestMovie(@QueryMap map : Map<String, String>): Observable<Movie>
 
     @GET("movie/{movie_id}")
     fun getMovieDetails(@Path("movie_id") id: String, @QueryMap map: Map<String, String>): Observable<MovieDetail>
