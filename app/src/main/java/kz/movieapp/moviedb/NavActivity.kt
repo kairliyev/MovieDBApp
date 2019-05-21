@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.app_bar_nav.*
 import kotlinx.android.synthetic.main.nav_header_nav.*
 import kz.movieapp.moviedb.models.User
 import kz.movieapp.moviedb.movie.MovieGenre
+import kz.movieapp.moviedb.movie.favorites.FavoriteFragment
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilter
 import kz.movieapp.moviedb.movie.latestmovie.LatestMovie
 import kz.movieapp.moviedb.movie.nowplaying.NowPlaying
@@ -166,7 +167,7 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 loadLatestMovieFragment(savedState)
             }
             R.id.fav -> {
-
+                loadFavoriteMovieFragment(savedState)
             }
             R.id.nav_send -> {
 
@@ -175,6 +176,15 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun loadFavoriteMovieFragment(savedState: Bundle?) {
+        if (savedState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_container, FavoriteFragment(), FavoriteFragment::class.simpleName)
+                .commit()
+        }
     }
 //    private fun loadPlayingFragment(savedInstanceState: Bundle?) {
 //        if (savedInstanceState == null) {

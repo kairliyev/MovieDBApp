@@ -4,6 +4,9 @@ import dagger.Module
 import dagger.Provides
 import kz.movieapp.moviedb.api.MovieDbApi
 import kz.movieapp.moviedb.di.AppScope
+import kz.movieapp.moviedb.movie.favorites.FavoriteFragment
+import kz.movieapp.moviedb.movie.favorites.FavoriteFragmentPresenter
+import kz.movieapp.moviedb.movie.favorites.FavoriteFragmentPresenterImpl
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilterPresenter
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilterPresenterImpl
 import kz.movieapp.moviedb.movie.latestmovie.LatestMoviePresenter
@@ -50,6 +53,11 @@ class MovieModule {
     @Provides
     fun provideGenreFilterPresenter(movieInteractor: MovieInteractor): GenreFilterPresenter {
         return GenreFilterPresenterImpl(movieInteractor, null)
+    }
+
+    @Provides
+    fun provideFavoriteFragmentPresenter(movieInteractor: MovieInteractor): FavoriteFragmentPresenter {
+        return FavoriteFragmentPresenterImpl( null)
     }
 
 }

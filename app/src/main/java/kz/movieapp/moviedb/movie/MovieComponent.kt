@@ -2,6 +2,7 @@ package kz.movieapp.moviedb.movie
 
 import dagger.Subcomponent
 import kz.movieapp.moviedb.di.AppScope
+import kz.movieapp.moviedb.movie.favorites.FavoriteFragment
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilter
 import kz.movieapp.moviedb.movie.latestmovie.LatestMovie
 import kz.movieapp.moviedb.movie.nowplaying.NowPlaying
@@ -17,4 +18,5 @@ interface MovieComponent {
     fun inject(target: PopularMovies)
     fun inject(target: LatestMovie)
     fun inject(target: GenreFilter)
+    fun inject(target: FavoriteFragment)
 }

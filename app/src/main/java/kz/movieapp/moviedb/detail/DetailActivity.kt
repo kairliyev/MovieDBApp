@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.item_movie.*
 
@@ -17,6 +20,7 @@ import kz.movieapp.moviedb.R
 import kz.movieapp.moviedb.models.Company
 import kz.movieapp.moviedb.models.MovieDetail
 import kz.movieapp.moviedb.models.Videos
+import java.util.*
 import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity(), DetailView {
@@ -58,6 +62,10 @@ class DetailActivity : AppCompatActivity(), DetailView {
 //        (genre_list.adapter as GenreAdapter).addGenre(movies?.genres)
         (company_list.adapter as CompanyAdapter).addcompany(movies?.companies)
 //        CompanyAdapter().addcompany(movies?.companies)
+
+        add_fav.setOnClickListener {
+            saveMovieToDatabase(movies)
+        }
     }
 
     override fun getVideos(videos: List<Videos>?) {
@@ -74,6 +82,25 @@ class DetailActivity : AppCompatActivity(), DetailView {
         company_list.layoutManager = layoutManager
         company_list.setHasFixedSize(true)
         company_list.adapter = CompanyAdapter()
+
+
+    }
+
+    private fun saveMovieToDatabase(movies: MovieDetail?) {
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val uuid = UUID.randomUUID()
+        val UUIDString = uuid.toString()
+
+        val ref = FirebaseDatabase.getInstance().getReference("/movies/${movies?.id}")
+
+
+        ref.setValue(movies)
+            .addOnSuccessListener {
+               Toast.makeText(applicationContext, "Успешно" , Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(applicationContext, "Не успешно" , Toast.LENGTH_LONG).show()
+            }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
