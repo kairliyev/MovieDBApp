@@ -1,7 +1,7 @@
 package kz.movieapp.moviedb.detail
 
 import kz.movieapp.moviedb.api.MovieDbApi
-import kz.movieapp.moviedb.api.VideoResponse
+import kz.movieapp.moviedb.models.response.VideoResponse
 import kz.movieapp.moviedb.models.MovieDetail
 import kz.movieapp.moviedb.utils.Language
 import rx.Observable

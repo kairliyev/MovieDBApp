@@ -11,6 +11,8 @@ import kz.movieapp.moviedb.movie.genrefilter.GenreFilterPresenter
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilterPresenterImpl
 import kz.movieapp.moviedb.movie.latestmovie.LatestMoviePresenter
 import kz.movieapp.moviedb.movie.latestmovie.LatestMoviePresenterImpl
+import kz.movieapp.moviedb.movie.movies.MoviePartPresenter
+import kz.movieapp.moviedb.movie.movies.MoviePartPresenterImpl
 import kz.movieapp.moviedb.movie.nowplaying.NowPlaying
 import kz.movieapp.moviedb.movie.nowplaying.NowPlayingPresenter
 import kz.movieapp.moviedb.movie.nowplaying.NowPlayingPresenterImpl
@@ -59,5 +61,11 @@ class MovieModule {
     fun provideFavoriteFragmentPresenter(movieInteractor: MovieInteractor): FavoriteFragmentPresenter {
         return FavoriteFragmentPresenterImpl( null)
     }
+
+    @Provides
+    fun provideMoviePartFragmentPresenter(movieInteractor: MovieInteractor): MoviePartPresenter {
+        return MoviePartPresenterImpl(movieInteractor, null)
+    }
+
 
 }

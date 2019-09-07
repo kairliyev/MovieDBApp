@@ -24,10 +24,11 @@ import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.app_bar_nav.*
 import kotlinx.android.synthetic.main.nav_header_nav.*
 import kz.movieapp.moviedb.models.User
-import kz.movieapp.moviedb.movie.MovieGenre
+
 import kz.movieapp.moviedb.movie.favorites.FavoriteFragment
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilter
 import kz.movieapp.moviedb.movie.latestmovie.LatestMovie
+import kz.movieapp.moviedb.movie.movies.MovieFragment
 import kz.movieapp.moviedb.movie.nowplaying.NowPlaying
 import kz.movieapp.moviedb.movie.popularmovies.PopularMovies
 import kz.movieapp.moviedb.movie.upcoming.UpcomingFragment
@@ -50,11 +51,7 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         setContentView(R.layout.activity_nav)
         setSupportActionBar(toolbar)
-        loadUpcomingFragment(savedInstanceState)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        loadMoviesFragment(savedInstanceState)
         uid = FirebaseAuth.getInstance().uid
         fetchUsers()
 
@@ -114,9 +111,6 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 .beginTransaction()
                 .replace(R.id.main_container, GenreFilter(), GenreFilter::class.simpleName)
                 .commit()
-
-            var arr: HashMap<String, String> = hashMapOf("with_genres" to query!!)
-            MovieGenre.movieMap = arr
         }
 
     }
@@ -143,10 +137,7 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_settings -> return true
-            R.id.action28 -> {
-                loadPopularMoviesFragmentToChangeLanguage(savedState)
-            }
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -154,28 +145,42 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
-                loadUpcomingFragment(savedState)
+//            R.id.nav_camera -> {
+//                loadUpcomingFragment(savedState)
+//            }
+//            R.id.nav_gallery -> {
+//                loadNowPlayingFragment(savedState)
+//            }
+//            R.id.nav_slideshow -> {
+//                loadPopularMoviesFragment(savedState)
+//            }
+//            R.id.nav_manage -> {
+//                loadLatestMovieFragment(savedState)
+//            }
+            R.id.movies_item -> {
+                Log.d("Movies Item", "Movies Item Fragment")
+                loadMoviesFragment(savedState)
             }
-            R.id.nav_gallery -> {
-                loadNowPlayingFragment(savedState)
-            }
-            R.id.nav_slideshow -> {
-                loadPopularMoviesFragment(savedState)
-            }
-            R.id.nav_manage -> {
-                loadLatestMovieFragment(savedState)
-            }
-            R.id.fav -> {
-                loadFavoriteMovieFragment(savedState)
-            }
-            R.id.nav_send -> {
-
-            }
+//            R.id.fav -> {
+//                loadFavoriteMovieFragment(savedState)
+//            }
+//            R.id.nav_send -> {
+//
+//            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun loadMoviesFragment(savedState: Bundle?) {
+        if (savedState == null) {
+            Log.d("Method", "loadMoviesFragment")
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_container, MovieFragment(), MovieFragment::class.simpleName)
+                .commit()
+        }
     }
 
     private fun loadFavoriteMovieFragment(savedState: Bundle?) {

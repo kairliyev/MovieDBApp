@@ -1,7 +1,6 @@
 package kz.movieapp.moviedb.movie.latestmovie
 
 import android.util.Log
-import kz.movieapp.moviedb.api.MovieResponse
 import kz.movieapp.moviedb.models.Movie
 import kz.movieapp.moviedb.movie.MovieInteractor
 import rx.android.schedulers.AndroidSchedulers

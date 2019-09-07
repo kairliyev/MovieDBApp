@@ -1,5 +1,8 @@
 package kz.movieapp.moviedb.models
 
+import com.google.gson.annotations.SerializedName
+
 data class Genre(
-    val id: String,
-    val name: String)
+    @SerializedName("id") val id : Int,
+    @SerializedName("name") val name : String
+)

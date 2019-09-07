@@ -1,17 +1,16 @@
 package kz.movieapp.moviedb.movie
 
 import kz.movieapp.moviedb.api.MovieDbApi
-import kz.movieapp.moviedb.api.MovieResponse
+import kz.movieapp.moviedb.models.response.MovieResponse
 import kz.movieapp.moviedb.models.Movie
+import kz.movieapp.moviedb.models.response.GenreList
 import kz.movieapp.moviedb.utils.Language
 import rx.Observable
 
 class MovieInteractorImpl(private val movieDbApi: MovieDbApi) : MovieInteractor {
 
-    var arr: Map<String, String> = hashMapOf()
-
-    fun addGenreQueryMap(aa: Map<String, String>) {
-        arr = aa
+    override fun getGenreList(): Observable<GenreList> {
+        return movieDbApi.getGenreList(createGenreListQueryMap())
     }
 
     override fun getUpcomingMovies(): Observable<MovieResponse> {
@@ -34,28 +33,24 @@ class MovieInteractorImpl(private val movieDbApi: MovieDbApi) : MovieInteractor 
         return movieDbApi.getGenreFilter(createGenreQueryMap())
     }
 
+    fun createGenreListQueryMap(): Map<String, String> {
+        return hashMapOf(
+            "language" to "ru"
+        )
+    }
+
     fun createGenreQueryMap(): Map<String, String> {
         return hashMapOf(
-            "language" to Language.language,
+            "language" to "ru",
             "sort_by" to "popularity.desc"
         )
     }
 
     private fun createQueryMap(): Map<String, String> {
         return hashMapOf(
-            "language" to Language.language,
+            "language" to "ru",
             "sort_by" to "popularity.desc"
         )
     }
 }
 
-object MovieGenre {
-    var movieMap: HashMap<String, String> = hashMapOf()
-}
-
-object MovieCustomQuery {
-    var movieQueryLanguageRU: HashMap<String, String> = hashMapOf(
-        "language" to Language.language,
-        "sort_by" to "popularity.desc"
-    )
-}

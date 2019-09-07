@@ -1,8 +1,8 @@
 package kz.movieapp.moviedb.movie
 
-import kz.movieapp.moviedb.api.MovieResponse
-import kz.movieapp.moviedb.api.SingleMovieResponse
+import kz.movieapp.moviedb.models.response.MovieResponse
 import kz.movieapp.moviedb.models.Movie
+import kz.movieapp.moviedb.models.response.GenreList
 import rx.Observable
 
 interface MovieInteractor {
@@ -11,4 +11,5 @@ interface MovieInteractor {
     fun getPopularMovies(): Observable<MovieResponse>
     fun getLatestMovies(): Observable<Movie>
     fun getGenreFilter(): Observable<MovieResponse>
+    fun getGenreList():Observable<GenreList>
 }

@@ -5,6 +5,7 @@ import kz.movieapp.moviedb.di.AppScope
 import kz.movieapp.moviedb.movie.favorites.FavoriteFragment
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilter
 import kz.movieapp.moviedb.movie.latestmovie.LatestMovie
+import kz.movieapp.moviedb.movie.movies.MovieFragment
 import kz.movieapp.moviedb.movie.nowplaying.NowPlaying
 import kz.movieapp.moviedb.movie.popularmovies.PopularMovies
 import kz.movieapp.moviedb.movie.upcoming.UpcomingFragment
@@ -19,4 +20,5 @@ interface MovieComponent {
     fun inject(target: LatestMovie)
     fun inject(target: GenreFilter)
     fun inject(target: FavoriteFragment)
+    fun inject(target: MovieFragment)
 }

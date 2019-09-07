@@ -32,7 +32,6 @@ class UpcomingFragment : Fragment(), UpcomingView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (context?.applicationContext as App).createMainComponent().inject(this)
-
     }
 
     override fun onCreateView(

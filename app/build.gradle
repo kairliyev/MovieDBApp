@@ -17,7 +17,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "YOUTUBE", "\"https://youtube.com/watch?v=\""
         buildConfigField "String", "BASE_URL", "\"http://api.themoviedb.org/3/\""
-        buildConfigField "String", "TMDB_API_KEY", "\"b9c08f4edc9ec157a61ce3f0a689f5f5\""
+        buildConfigField "String", "TMDB_API_KEY", "\"02da584cad2ae31b564d940582770598\""
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -31,6 +32,7 @@ ext {
     support_lib_version = '27.1.1'
     dagger_version = '2.5'
     retrofitVersion = '2.3.0'
+    multidex_version = '2.0.1'
 }
 
 kapt {
@@ -77,6 +79,9 @@ dependencies {
 
     //other
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.10.0'
+    implementation "androidx.multidex:multidex:$multidex_version"
+
+
 }
 
 androidExtensions {

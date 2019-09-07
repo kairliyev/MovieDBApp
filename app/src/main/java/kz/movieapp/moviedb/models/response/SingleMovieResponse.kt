@@ -1,9 +1,8 @@
-package kz.movieapp.moviedb.api
+package kz.movieapp.moviedb.models.response
 
 import com.google.gson.annotations.SerializedName
 import kz.movieapp.moviedb.models.Movie
 
-data class MovieResponse (
-    @SerializedName("results")
+data class SingleMovieResponse(
     var movies: List<Movie>
 )
