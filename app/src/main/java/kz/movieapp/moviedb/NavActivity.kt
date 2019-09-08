@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -51,14 +50,14 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         savedState = savedInstanceState
 
         setContentView(R.layout.activity_nav)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar_genre)
         loadMoviesFragment(savedInstanceState)
         uid = FirebaseAuth.getInstance().uid
         fetchUsers()
 
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout, toolbar_genre, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
@@ -110,7 +109,7 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         if (savedState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_container, GenreFilter(), GenreFilter::class.simpleName)
+                .replace(R.id.main_container, GenreFilter("2"), GenreFilter::class.simpleName)
                 .commit()
         }
 
@@ -180,7 +179,7 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     private fun loadGenreFragment(savedState: Bundle?) {
         if (savedState == null) {
-            toolbar?.title = "Жанры"
+            toolbar_genre?.title = "Жанры"
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.main_container, GenreFragment(), GenreFragment::class.simpleName)
@@ -191,7 +190,7 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     private fun loadMoviesFragment(savedState: Bundle?) {
         if (savedState == null) {
-            toolbar?.title = "Фильмы"
+            toolbar_genre?.title = "Фильмы"
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.main_container, MovieFragment(), MovieFragment::class.simpleName)

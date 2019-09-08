@@ -49,16 +49,12 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
     inner class ViewHolder(root: View) : RecyclerView.ViewHolder(root) {
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         fun bind(genre: Genre) = with(itemView) {
-            genre_item_rv.text = genre.name
+            genre_item_rv.text = genre._name
             genre_item_rv.setOnClickListener {
                 val activity = Intent(itemView.context, GenreActivity::class.java)
+                activity.putExtra("idGenre", genres[adapterPosition].id.toString())
+                activity.putExtra("idGenreName", genres[adapterPosition]._name)
                 itemView.context.startActivity(activity,ActivityOptions.makeSceneTransitionAnimation((context as Activity)).toBundle())
-
-//                Intent intent = new Intent(mContext, NextActivity.class);
-//                intent.putExtra("image", movie.getImage());
-//                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, (View)imageView, getString(R.string.image_transition);
-//                ContextCompat.startActivity(intent, options.toBundle());
-
             }
         }
     }

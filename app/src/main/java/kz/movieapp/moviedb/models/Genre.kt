@@ -4,5 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class Genre(
     @SerializedName("id") val id : Int,
-    @SerializedName("name") val name : String
-)
+    @SerializedName("name") var name: String
+) {
+    val _name: String
+        get() = this.name.capitalize()
+}

@@ -13,7 +13,7 @@ import kz.movieapp.moviedb.models.Movie
 import kz.movieapp.moviedb.movie.MovieAdapter
 import javax.inject.Inject
 
-class GenreFilter : Fragment(), GenreFilterView {
+class GenreFilter(var id: String) : Fragment(), GenreFilterView {
     @Inject
     lateinit var presenter: GenreFilterPresenter
 
@@ -32,7 +32,7 @@ class GenreFilter : Fragment(), GenreFilterView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initLayout()
-        presenter.setView(this)
+        presenter.setView(this, this.id)
     }
 
     override fun onDestroyView() {

@@ -10,6 +10,6 @@ interface MovieInteractor {
     fun getUpcomingMovies(): Observable<MovieResponse>
     fun getPopularMovies(): Observable<MovieResponse>
     fun getLatestMovies(): Observable<Movie>
-    fun getGenreFilter(): Observable<MovieResponse>
+    fun getGenreFilter(id:String): Observable<MovieResponse>
     fun getGenreList():Observable<GenreList>
 }
