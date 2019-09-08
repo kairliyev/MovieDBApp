@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -13,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.item_movie.*
+import kotlinx.coroutines.*
 
 import kz.movieapp.moviedb.App
 import kz.movieapp.moviedb.BuildConfig
@@ -29,20 +31,14 @@ class DetailActivity : AppCompatActivity(), DetailView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_detail)
         (applicationContext as App).createDetailComponent().inject(this)
 
         val id = intent.getStringExtra("id")
-        setupToolbar()
         initLayout()
         presenter.setView(this, id)
 
-    }
-
-    private fun setupToolbar(){
-//        setSupportActionBar(appbar)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        collapsingToolbar.setExpandedTitleMargin(50, 50, 250, 50)
     }
 
     override fun showMovieDetails(movies: MovieDetail?) {
@@ -57,14 +53,24 @@ class DetailActivity : AppCompatActivity(), DetailView {
         if (rateAvg != null) {
             rating_bar.rating = rateAvg.toFloat()
         }
+        loadImage(movies?.getPosterUrl(), image_detail)
 
-        Glide.with(this).load(movies?.getPosterUrl()).into(image_detail)
-//        (genre_list.adapter as GenreAdapter).addGenre(movies?.genres)
         (company_list.adapter as CompanyAdapter).addcompany(movies?.companies)
-//        CompanyAdapter().addcompany(movies?.companies)
 
         add_fav.setOnClickListener {
             saveMovieToDatabase(movies)
+        }
+    }
+
+    private fun loadImage(posterUrl: String?, image_detail: ImageView) {
+        runBlocking<Unit> {
+
+            launch {
+                val imageFullLoading = async {
+                    Glide.with(applicationContext).load(posterUrl).into(image_detail)
+                }
+                imageFullLoading.await()
+            }
         }
     }
 
@@ -106,7 +112,8 @@ class DetailActivity : AppCompatActivity(), DetailView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == android.R.id.home) {
-            finish()
+            onBackPressed()
+            return true
         }
 
         return super.onOptionsItemSelected(item)

@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.nav_header_nav.*
 import kz.movieapp.moviedb.models.User
 
 import kz.movieapp.moviedb.movie.favorites.FavoriteFragment
+import kz.movieapp.moviedb.movie.genre.GenreFragment
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilter
 import kz.movieapp.moviedb.movie.latestmovie.LatestMovie
 import kz.movieapp.moviedb.movie.movies.MovieFragment
@@ -158,9 +159,13 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 //                loadLatestMovieFragment(savedState)
 //            }
             R.id.movies_item -> {
-                Log.d("Movies Item", "Movies Item Fragment")
                 loadMoviesFragment(savedState)
             }
+            R.id.genre_item -> {
+                loadGenreFragment(savedState)
+            }
+
+
 //            R.id.fav -> {
 //                loadFavoriteMovieFragment(savedState)
 //            }
@@ -173,9 +178,20 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         return true
     }
 
+    private fun loadGenreFragment(savedState: Bundle?) {
+        if (savedState == null) {
+            toolbar?.title = "Жанры"
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_container, GenreFragment(), GenreFragment::class.simpleName)
+                .commit()
+        }
+
+    }
+
     private fun loadMoviesFragment(savedState: Bundle?) {
         if (savedState == null) {
-            Log.d("Method", "loadMoviesFragment")
+            toolbar?.title = "Фильмы"
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.main_container, MovieFragment(), MovieFragment::class.simpleName)

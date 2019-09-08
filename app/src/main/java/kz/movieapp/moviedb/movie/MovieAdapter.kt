@@ -1,10 +1,13 @@
 package kz.movieapp.moviedb.movie
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -42,7 +45,16 @@ class MovieAdapter(private val context: Context?) : RecyclerView.Adapter<MovieAd
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     val intent = Intent(context, DetailActivity::class.java)
                     intent.putExtra("id", movies[adapterPosition].id)
-                    context?.let { it1 -> startActivity(it1, intent, null) }
+                    val pair: Pair<View, String> = Pair(itemView, context!!.getString(R.string.film_transition))
+                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        (context as Activity),
+                        itemView,
+                        context.getString(R.string.film_transition)
+                    )
+                    context?.let {
+                            it1 ->
+                        startActivity(it1, intent, options.toBundle())
+                    }
                 }
             }
         }
