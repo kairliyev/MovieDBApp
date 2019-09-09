@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import kotlinx.coroutines.*
 import kz.movieapp.moviedb.App
 import kz.movieapp.moviedb.movie.popularmovies.PopularMovies
 import kz.movieapp.moviedb.movie.upcoming.UpcomingFragment
@@ -13,9 +14,18 @@ class ViewPagerAdapter(fragmentManager: FragmentManager?) : FragmentPagerAdapter
     var listFragment = mutableListOf<Fragment>()
 
     init {
-        listFragment.add(UpcomingFragment())
-        listFragment.add(PopularMovies())
-        Log.d("Constructor size", "${listFragment.size}")
+        runBlocking<Unit> {
+            launch {
+                val fp = async {
+                    listFragment.add(PopularMovies())
+                }
+                val sp = async {
+                    listFragment.add(UpcomingFragment())
+                }
+                fp.await()
+                sp.await()
+            }
+        }
     }
 
     override fun getItem(position: Int): Fragment {

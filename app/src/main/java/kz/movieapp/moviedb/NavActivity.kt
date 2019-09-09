@@ -29,6 +29,7 @@ import kz.movieapp.moviedb.movie.genre.GenreFragment
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilter
 import kz.movieapp.moviedb.movie.latestmovie.LatestMovie
 import kz.movieapp.moviedb.movie.movies.MovieFragment
+import kz.movieapp.moviedb.movie.movies.adapters.ViewPagerAdapter
 import kz.movieapp.moviedb.movie.nowplaying.NowPlaying
 import kz.movieapp.moviedb.movie.popularmovies.PopularMovies
 import kz.movieapp.moviedb.movie.upcoming.UpcomingFragment
@@ -54,7 +55,6 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         loadMoviesFragment(savedInstanceState)
         uid = FirebaseAuth.getInstance().uid
         fetchUsers()
-
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar_genre, R.string.navigation_drawer_open, R.string.navigation_drawer_close

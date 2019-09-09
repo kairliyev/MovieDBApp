@@ -8,7 +8,7 @@ import rx.Observable
 interface MovieInteractor {
     fun getNowPlayingMovies(): Observable<MovieResponse>
     fun getUpcomingMovies(): Observable<MovieResponse>
-    fun getPopularMovies(): Observable<MovieResponse>
+    fun getPopularMovies(page: Int): Observable<MovieResponse>
     fun getLatestMovies(): Observable<Movie>
     fun getGenreFilter(id:String): Observable<MovieResponse>
     fun getGenreList():Observable<GenreList>

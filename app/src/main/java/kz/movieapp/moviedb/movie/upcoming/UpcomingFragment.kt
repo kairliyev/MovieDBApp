@@ -61,7 +61,7 @@ class UpcomingFragment : Fragment(), UpcomingView {
         list_movie.adapter = MovieAdapter(context)
     }
 
-    override fun showUpcomingMovies(movies: List<Movie>?) {
+    override fun showUpcomingMovies(movies: ArrayList<Movie>?) {
         progress_bar.visibility = View.GONE
         (list_movie.adapter as MovieAdapter).addMovies(movies)
     }

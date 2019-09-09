@@ -64,7 +64,7 @@ class NowPlaying : Fragment(), NowPlayingView {
         list_movie.adapter = MovieAdapter(context)
     }
 
-    override fun showNowPlayingMovies(movies: List<Movie>?) {
+    override fun showNowPlayingMovies(movies: ArrayList<Movie>?) {
         progress_bar.visibility = View.GONE
         (list_movie.adapter as MovieAdapter).addMovies(movies)
     }

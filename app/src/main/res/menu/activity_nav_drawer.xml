@@ -13,6 +13,10 @@
 				android:id="@+id/genre_item"
 				android:icon="@drawable/ic_play_button"
 				android:title="Жанры"/>
+		<item
+				android:id="@+id/filter"
+				android:title="Фильтр"
+				android:icon="@drawable/filter"/>
 	</group>
 
 	<!--<item android:title="Communicate">-->

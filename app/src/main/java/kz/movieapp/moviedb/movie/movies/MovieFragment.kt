@@ -10,11 +10,17 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_movie.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kz.movieapp.moviedb.App
 
 import kz.movieapp.moviedb.R
 import kz.movieapp.moviedb.models.Movie
 import kz.movieapp.moviedb.movie.movies.adapters.ViewPagerAdapter
+import kz.movieapp.moviedb.movie.popularmovies.PopularMovies
+import kz.movieapp.moviedb.movie.upcoming.UpcomingFragment
 
 import javax.inject.Inject
 
@@ -52,8 +58,6 @@ class MovieFragment : Fragment(), MoviePartView {
     override fun onDestroyView() {
         super.onDestroyView()
         (context?.applicationContext as App).releaseMainComponent()
-
     }
-
 
 }

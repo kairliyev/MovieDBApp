@@ -5,5 +5,5 @@ import kz.movieapp.moviedb.models.Movie
 
 data class MovieResponse (
     @SerializedName("results")
-    var movies: List<Movie>
+    var movies:  ArrayList<Movie>
 )

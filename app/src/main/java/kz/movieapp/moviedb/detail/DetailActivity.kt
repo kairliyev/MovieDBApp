@@ -64,7 +64,6 @@ class DetailActivity : AppCompatActivity(), DetailView {
 
     private fun loadImage(posterUrl: String?, image_detail: ImageView) {
         runBlocking<Unit> {
-
             launch {
                 val imageFullLoading = async {
                     Glide.with(applicationContext).load(posterUrl).into(image_detail)

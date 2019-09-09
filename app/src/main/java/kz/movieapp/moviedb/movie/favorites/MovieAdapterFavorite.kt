@@ -20,7 +20,7 @@ import kz.movieapp.moviedb.R
 
 
 class MovieAdapterFavorite(private val context: Context?) : RecyclerView.Adapter<MovieAdapterFavorite.ViewHolder>(){
-    private var movies: List<Movie> = ArrayList()
+    private var movies: ArrayList<Movie> = ArrayList()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(movies[position])
@@ -35,7 +35,7 @@ class MovieAdapterFavorite(private val context: Context?) : RecyclerView.Adapter
         return ViewHolder(root)
     }
 
-    fun addMovies(movies: List<Movie>?) {
+    fun addMovies(movies: ArrayList<Movie>?) {
         if (movies != null) {
             this.movies = movies
             notifyDataSetChanged()

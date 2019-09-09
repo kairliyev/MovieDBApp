@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,7 @@ import kz.movieapp.moviedb.detail.DetailActivity
 import kz.movieapp.moviedb.models.Movie
 
 class MovieAdapter(private val context: Context?) : RecyclerView.Adapter<MovieAdapter.ViewHolder>(){
-    private var movies: List<Movie> = ArrayList()
+    private var movies: ArrayList<Movie> = ArrayList()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(movies[position])
@@ -32,10 +33,11 @@ class MovieAdapter(private val context: Context?) : RecyclerView.Adapter<MovieAd
         return ViewHolder(root)
     }
 
-    fun addMovies(movies: List<Movie>?) {
+    fun addMovies(movies: ArrayList<Movie>?) {
         if (movies != null) {
-            this.movies = movies
+            this.movies.addAll(movies)
             notifyDataSetChanged()
+            Log.d("MOVIE", "SIZE ${movies.size}")
         }
     }
 

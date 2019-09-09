@@ -49,7 +49,7 @@ class GenreFilter(var id: String) : Fragment(), GenreFilterView {
         list_movie.adapter = MovieAdapter(context)
     }
 
-    override fun showGenreFilterMovie(movies: List<Movie>?) {
+    override fun showGenreFilterMovie(movies: ArrayList<Movie>?) {
         progress_bar.visibility = View.GONE
         (list_movie.adapter as MovieAdapter).addMovies(movies)
     }

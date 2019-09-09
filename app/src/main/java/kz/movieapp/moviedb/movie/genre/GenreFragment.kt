@@ -17,7 +17,6 @@ import kz.movieapp.moviedb.R
 import kz.movieapp.moviedb.models.response.GenreList
 import kz.movieapp.moviedb.movie.genre.adapter.GenreAdapter
 import javax.inject.Inject
-import kz.movieapp.moviedb.MainActivity
 
 
 // TODO: Rename parameter arguments, choose names that match

@@ -7,14 +7,17 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class PopularMoviesPresenterImpl(private val interactor: MovieInteractor, private var view: PopularMoviesView?): PopularMoviesPresenter {
-
-    override fun setView(PopularMoviesView: PopularMoviesView) {
-        view = PopularMoviesView
-        getPopularMoviesMovies()
+    override fun loadMore(page: Int) {
+        getPopularMoviesMovies(page)
     }
 
-    private fun getPopularMoviesMovies(){
-        interactor.getPopularMovies()
+    override fun setView(popularMoviesView: PopularMoviesView) {
+        view = popularMoviesView
+        getPopularMoviesMovies(1)
+    }
+
+    private fun getPopularMoviesMovies(page: Int){
+        interactor.getPopularMovies(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
