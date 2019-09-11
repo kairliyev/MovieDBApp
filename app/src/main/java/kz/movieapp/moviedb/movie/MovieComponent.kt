@@ -12,6 +12,7 @@ import kz.movieapp.moviedb.movie.movies.MovieFragment
 import kz.movieapp.moviedb.movie.nowplaying.NowPlaying
 import kz.movieapp.moviedb.movie.popularmovies.PopularMovies
 import kz.movieapp.moviedb.movie.upcoming.UpcomingFragment
+import kz.movieapp.moviedb.search_history.SearchHistoryFragment
 
 @AppScope
 @Subcomponent(modules = [(MovieModule::class)])
@@ -25,4 +26,5 @@ interface MovieComponent {
     fun inject(target: MovieFragment)
     fun inject(target: GenreFragment)
     fun inject(target: MovieFilterFragment)
+    fun inject(target: SearchHistoryFragment)
 }

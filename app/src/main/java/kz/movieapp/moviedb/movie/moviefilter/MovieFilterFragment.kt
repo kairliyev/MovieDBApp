@@ -101,11 +101,6 @@ class MovieFilterFragment : Fragment(), DoneItemClickListener, MovieFilterFragme
         Log.d("YEAH", "$movieResponse")
     }
 
-    override fun loading() {
-    }
-
-    override fun hideLoading() {
-    }
 }
 
 interface DoneItemClickListener {

@@ -13,4 +13,5 @@ interface MovieInteractor {
     fun getGenreFilter(id:String, page: Int): Observable<MovieResponse>
     fun getGenreList():Observable<GenreList>
     fun getMovieFilter(from: String, to: String, request: String, page: Int):Observable<MovieResponse>
+    fun getSearchedMovie(query: String):Observable<MovieResponse>
 }

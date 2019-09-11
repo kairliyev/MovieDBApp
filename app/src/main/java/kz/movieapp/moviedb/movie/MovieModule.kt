@@ -17,6 +17,7 @@ import kz.movieapp.moviedb.movie.moviefilter.MovieFilterPresenter
 import kz.movieapp.moviedb.movie.moviefilter.MovieFilterPresenterImpl
 import kz.movieapp.moviedb.movie.movies.MoviePartPresenter
 import kz.movieapp.moviedb.movie.movies.MoviePartPresenterImpl
+import kz.movieapp.moviedb.search_history.SearchHistoryPresenterImpl
 import kz.movieapp.moviedb.movie.nowplaying.NowPlaying
 import kz.movieapp.moviedb.movie.nowplaying.NowPlayingPresenter
 import kz.movieapp.moviedb.movie.nowplaying.NowPlayingPresenterImpl
@@ -24,6 +25,7 @@ import kz.movieapp.moviedb.movie.popularmovies.PopularMoviesPresenter
 import kz.movieapp.moviedb.movie.popularmovies.PopularMoviesPresenterImpl
 import kz.movieapp.moviedb.movie.upcoming.UpcomingPresenter
 import kz.movieapp.moviedb.movie.upcoming.UpcomingPresenterImpl
+import kz.movieapp.moviedb.search_history.SearchHistoryPresenter
 
 @Module
 class MovieModule {
@@ -74,6 +76,10 @@ class MovieModule {
     @Provides
     fun provideMovieFilterPresenter(movieInteractor: MovieInteractor): MovieFilterPresenter {
         return MovieFilterPresenterImpl(movieInteractor, null)
+    }
+    @Provides
+    fun provideSearchHistoryPresenter(movieInteractor: MovieInteractor): SearchHistoryPresenter {
+        return SearchHistoryPresenterImpl(movieInteractor, null)
     }
 
 }

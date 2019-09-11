@@ -9,6 +9,10 @@ import rx.Observable
 
 class MovieInteractorImpl(private val movieDbApi: MovieDbApi) : MovieInteractor {
 
+    override fun getSearchedMovie(query: String): Observable<MovieResponse> {
+        return movieDbApi.getSearchedMovie(createSearchMovieQueryMap(query))
+    }
+
     override fun getGenreList(): Observable<GenreList> {
         return movieDbApi.getGenreList(createGenreListQueryMap())
     }
@@ -68,5 +72,14 @@ class MovieInteractorImpl(private val movieDbApi: MovieDbApi) : MovieInteractor 
             "sort_by" to "popularity.desc"
         )
     }
+
+    private fun createSearchMovieQueryMap(query: String): Map<String, String> {
+        return hashMapOf(
+            "query" to query,
+            "language" to "ru",
+            "sort_by" to "popularity.desc"
+        )
+    }
+
 }
 

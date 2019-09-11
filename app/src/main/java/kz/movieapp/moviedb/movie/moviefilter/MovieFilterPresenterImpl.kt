@@ -5,11 +5,13 @@ import kz.movieapp.moviedb.models.Genre
 import kz.movieapp.moviedb.models.response.GenreList
 import kz.movieapp.moviedb.models.response.MovieResponse
 import kz.movieapp.moviedb.movie.MovieInteractor
+import kz.movieapp.moviedb.search_history.SearchHistoryFragment
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class MovieFilterPresenterImpl(private val interactor: MovieInteractor, private var view: MovieFilterFragmentView?) :
     MovieFilterPresenter {
+
     override fun prepareGenreList(view: MovieFilterFragment) {
         this.view = view
         getGenreListFromRequest()
