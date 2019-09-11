@@ -37,5 +37,5 @@ interface MovieDbApi {
     fun getMovieVideos(@Path("movie_id") id: String): Observable<VideoResponse>
 
     @GET("movie/{movie_id}/similar")
-    fun getSimilarMovies(@Path("movie_id") id: String): Observable<MovieResponse>
+    fun getSimilarMovies(@Path("movie_id") id: String, @QueryMap map: Map<String, String>): Observable<MovieResponse>
 }

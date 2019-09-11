@@ -10,6 +10,6 @@
                 android:id="@+id/company_logo_image"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:src="@drawable/common_google_signin_btn_text_light_normal"/>
+                android:src="@drawable/denied"/>
 
 </FrameLayout>

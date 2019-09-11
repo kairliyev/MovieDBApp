@@ -9,7 +9,7 @@ import rx.Observable
 
 class DetailInteractorImpl(private val movieDbApi: MovieDbApi): DetailInteractor{
     override fun getSimilarMovies(id: String): Observable<MovieResponse> {
-        return movieDbApi.getSimilarMovies(id)
+        return movieDbApi.getSimilarMovies(id, createQueryMap())
     }
 
     override fun getMovieVideos(id: String): Observable<VideoResponse> {

@@ -1,6 +1,10 @@
 package kz.movieapp.moviedb.detail
 
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kz.movieapp.moviedb.models.response.VideoResponse
 import kz.movieapp.moviedb.models.MovieDetail
 import kz.movieapp.moviedb.models.response.MovieResponse
@@ -11,9 +15,21 @@ class DetailPresenterImpl(val interactor: DetailInteractor, private var view: De
 
     override fun setView(mainView: DetailView, id: String) {
         view = mainView
-        getMovieDetails(id)
-        getMovieVideos(id)
-        getSimilarMovies(id)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val w1 = async {
+                getMovieDetails(id)
+            }
+            val w2 = async{
+                getMovieVideos(id)
+            }
+            val w3 = async {
+                getSimilarMovies(id)
+            }
+            w1.await()
+            w2.await()
+            w3.await()
+        }
     }
 
     private fun getSimilarMovies(id: String) {
