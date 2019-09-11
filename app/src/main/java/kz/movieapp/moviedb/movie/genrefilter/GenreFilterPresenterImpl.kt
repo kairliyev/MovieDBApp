@@ -9,13 +9,17 @@ import rx.schedulers.Schedulers
 
 class GenreFilterPresenterImpl(private val interactor: MovieInteractor, private var view: GenreFilterView?): GenreFilterPresenter {
 
-    override fun setView(genreFilterView: GenreFilterView, id: String) {
-        view = genreFilterView
-        getGenreFilterMovies(id)
+    override fun loadMore(id: String, page: Int) {
+        getGenreFilterMovies(id, page)
     }
 
-    private fun getGenreFilterMovies(id: String){
-        interactor.getGenreFilter(id)
+    override fun setView(genreFilterView: GenreFilterView, id: String) {
+        view = genreFilterView
+        getGenreFilterMovies(id, 1)
+    }
+
+    private fun getGenreFilterMovies(id: String, page: Int){
+        interactor.getGenreFilter(id,page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

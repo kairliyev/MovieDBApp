@@ -13,8 +13,8 @@ class MovieInteractorImpl(private val movieDbApi: MovieDbApi) : MovieInteractor 
         return movieDbApi.getGenreList(createGenreListQueryMap())
     }
 
-    override fun getUpcomingMovies(): Observable<MovieResponse> {
-        return movieDbApi.getUpcomingMovie(createQueryMap(1))
+    override fun getUpcomingMovies(page: Int): Observable<MovieResponse> {
+        return movieDbApi.getUpcomingMovie(createQueryMap(page))
     }
 
     override fun getPopularMovies(page: Int): Observable<MovieResponse> {
@@ -29,11 +29,11 @@ class MovieInteractorImpl(private val movieDbApi: MovieDbApi) : MovieInteractor 
         return movieDbApi.getLatestMovie(createQueryMap(1))
     }
 
-    override fun getGenreFilter(id: String): Observable<MovieResponse> {
-        return movieDbApi.getGenreFilter(createGenreFilterQueryMap(id))
+    override fun getGenreFilter(id: String, page: Int): Observable<MovieResponse> {
+        return movieDbApi.getGenreFilter(createGenreFilterQueryMap(id, page))
     }
 
-    override fun getMovieFilter(from: String, to: String, request: String): Observable<MovieResponse> {
+    override fun getMovieFilter(from: String, to: String, request: String, page: Int): Observable<MovieResponse> {
         return movieDbApi.getGenreFilter(createMovieFilterQueryMap(from,to,request))
     }
 
@@ -43,8 +43,9 @@ class MovieInteractorImpl(private val movieDbApi: MovieDbApi) : MovieInteractor 
         )
     }
 
-    fun createGenreFilterQueryMap(id: String): Map<String, String> {
+    fun createGenreFilterQueryMap(id: String, page: Int): Map<String, String> {
         return hashMapOf(
+            "page" to page.toString(),
             "language" to "ru",
             "with_genres" to id,
             "sort_by" to "popularity.desc"

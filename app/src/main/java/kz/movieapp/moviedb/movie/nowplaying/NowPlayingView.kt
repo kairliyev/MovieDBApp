@@ -6,4 +6,5 @@ import kz.movieapp.moviedb.models.response.MovieResponse
 
 interface NowPlayingView {
     fun showFilteredMovies(movieResponse: MovieResponse?)
+    fun showLoading()
 }

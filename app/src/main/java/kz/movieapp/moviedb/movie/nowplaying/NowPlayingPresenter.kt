@@ -7,4 +7,11 @@ interface NowPlayingPresenter {
         to: String,
         request: String
     )
+
+    fun loadMore(
+        from: String,
+        to: String,
+        request: String,
+        page: Int
+    )
 }

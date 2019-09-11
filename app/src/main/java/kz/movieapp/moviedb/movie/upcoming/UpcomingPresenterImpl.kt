@@ -8,13 +8,16 @@ import rx.schedulers.Schedulers
 
 class UpcomingPresenterImpl(private val interactor: MovieInteractor, private var view: UpcomingView?): UpcomingPresenter {
 
+    override fun loadMore(page: Int) {
+        getNowPlayingMovies(page)
+    }
     override fun setView(nowPlayingView: UpcomingView) {
         view = nowPlayingView
-        getNowPlayingMovies()
+        getNowPlayingMovies(1)
     }
 
-    private fun getNowPlayingMovies(){
-        interactor.getUpcomingMovies()
+    private fun getNowPlayingMovies(page: Int){
+        interactor.getUpcomingMovies(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

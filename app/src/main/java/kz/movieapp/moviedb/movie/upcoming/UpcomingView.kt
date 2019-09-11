@@ -4,4 +4,5 @@ import kz.movieapp.moviedb.models.Movie
 
 interface UpcomingView {
     fun showUpcomingMovies(movies : ArrayList<Movie>?)
+    fun showLoading()
 }

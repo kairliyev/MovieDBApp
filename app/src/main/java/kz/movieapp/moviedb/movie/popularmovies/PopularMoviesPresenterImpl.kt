@@ -8,15 +8,15 @@ import rx.schedulers.Schedulers
 
 class PopularMoviesPresenterImpl(private val interactor: MovieInteractor, private var view: PopularMoviesView?): PopularMoviesPresenter {
     override fun loadMore(page: Int) {
-        getPopularMoviesMovies(page)
+        getPopularMovies(page)
     }
 
     override fun setView(popularMoviesView: PopularMoviesView) {
         view = popularMoviesView
-        getPopularMoviesMovies(1)
+        getPopularMovies(1)
     }
 
-    private fun getPopularMoviesMovies(page: Int){
+    private fun getPopularMovies(page: Int){
         interactor.getPopularMovies(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

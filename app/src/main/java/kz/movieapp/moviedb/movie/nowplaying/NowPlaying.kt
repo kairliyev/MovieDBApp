@@ -2,17 +2,22 @@ package kz.movieapp.moviedb.movie.nowplaying
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_now_playing.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kz.movieapp.moviedb.App
-
 import kz.movieapp.moviedb.R
 import kz.movieapp.moviedb.models.response.MovieResponse
 import kz.movieapp.moviedb.movie.MovieAdapter
+import kz.movieapp.moviedb.movie.PaginationRecycler
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,6 +34,8 @@ class NowPlaying(internal var from: String,internal var to: String, internal var
 
     @Inject
     lateinit var presenter: NowPlayingPresenter
+
+    lateinit var paginationRecycler: PaginationRecycler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +68,30 @@ class NowPlaying(internal var from: String,internal var to: String, internal var
         list_movie.layoutManager = layoutManager
         list_movie.setHasFixedSize(true)
         list_movie.adapter = MovieAdapter(context)
+
+        paginationRecycler = object : PaginationRecycler(layoutManager) {
+            override fun nextPage(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                loadNextDataFromApi(page)
+            }
+        }
+        list_movie.addOnScrollListener(paginationRecycler)
+
     }
+
+    private fun loadNextDataFromApi(page: Int) {
+        GlobalScope.launch(Dispatchers.Main) {
+            showLoading()
+            withContext(Dispatchers.IO) {
+                presenter.loadMore(from, to, request, page)
+            }
+        }
+    }
+
+
+    override fun showLoading() {
+        progress_bar.visibility = View.VISIBLE
+    }
+
 
     override fun showFilteredMovies(movieResponse: MovieResponse?) {
         progress_bar.visibility = View.GONE

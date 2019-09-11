@@ -15,25 +15,25 @@ class MovieFilterPresenterImpl(private val interactor: MovieInteractor, private 
         getGenreListFromRequest()
     }
 
-    override fun filterMovie(from: String, to: String, request: String) {
-        var fr = "$from-01-01"
-        var t = "$to-01-01"
-        interactor.getMovieFilter(fr,t,request)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { response -> onGetMovieFilterListSuccess(response)},
-                { e -> onGetMovieFilterFailure(e) }
-            )
-    }
-
-    private fun onGetMovieFilterFailure(e: Throwable?) {
-
-    }
-
-    private fun onGetMovieFilterListSuccess(response: MovieResponse?) {
-        view?.showResult(response)
-    }
+//    override fun filterMovie(from: String, to: String, request: String) {
+//        var fr = "$from-01-01"
+//        var t = "$to-01-01"
+//        interactor.getMovieFilter(fr,t,request)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(
+//                { response -> onGetMovieFilterListSuccess(response)},
+//                { e -> onGetMovieFilterFailure(e) }
+//            )
+//    }
+//
+//    private fun onGetMovieFilterFailure(e: Throwable?) {
+//
+//    }
+//
+//    private fun onGetMovieFilterListSuccess(response: MovieResponse?) {
+//        view?.showResult(response)
+//    }
 
     private fun getGenreListFromRequest() {
         interactor.getGenreList()
