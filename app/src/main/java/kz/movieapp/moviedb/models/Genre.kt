@@ -9,3 +9,7 @@ data class Genre(
     val _name: String
         get() = this.name.capitalize()
 }
+
+data class GenreShow(
+    val ids : String
+)

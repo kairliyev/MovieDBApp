@@ -18,7 +18,7 @@ class DetailInteractorImpl(private val movieDbApi: MovieDbApi): DetailInteractor
 
     private fun createQueryMap(): Map<String, String>{
         return hashMapOf(
-            "language" to Language.language
+            "language" to "ru"
         )
     }
 }

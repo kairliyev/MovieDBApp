@@ -1,7 +1,10 @@
 package kz.movieapp.moviedb.movie.nowplaying
 
-import kz.movieapp.moviedb.movie.upcoming.UpcomingView
-
 interface NowPlayingPresenter {
-    fun setView(nowPlayingView: NowPlayingView)
+    fun setView(
+        nowPlayingView: NowPlayingView,
+        from: String,
+        to: String,
+        request: String
+    )
 }

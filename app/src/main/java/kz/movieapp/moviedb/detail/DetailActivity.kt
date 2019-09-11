@@ -57,9 +57,9 @@ class DetailActivity : AppCompatActivity(), DetailView {
 
         (company_list.adapter as CompanyAdapter).addcompany(movies?.companies)
 
-        add_fav.setOnClickListener {
-            saveMovieToDatabase(movies)
-        }
+//        add_fav.setOnClickListener {
+//            saveMovieToDatabase(movies)
+//        }
     }
 
     private fun loadImage(posterUrl: String?, image_detail: ImageView) {

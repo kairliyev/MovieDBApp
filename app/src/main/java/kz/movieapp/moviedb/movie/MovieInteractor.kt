@@ -12,4 +12,5 @@ interface MovieInteractor {
     fun getLatestMovies(): Observable<Movie>
     fun getGenreFilter(id:String): Observable<MovieResponse>
     fun getGenreList():Observable<GenreList>
+    fun getMovieFilter(from: String, to: String, request: String):Observable<MovieResponse>
 }

@@ -13,6 +13,8 @@ import kz.movieapp.moviedb.movie.genrefilter.GenreFilterPresenter
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilterPresenterImpl
 import kz.movieapp.moviedb.movie.latestmovie.LatestMoviePresenter
 import kz.movieapp.moviedb.movie.latestmovie.LatestMoviePresenterImpl
+import kz.movieapp.moviedb.movie.moviefilter.MovieFilterPresenter
+import kz.movieapp.moviedb.movie.moviefilter.MovieFilterPresenterImpl
 import kz.movieapp.moviedb.movie.movies.MoviePartPresenter
 import kz.movieapp.moviedb.movie.movies.MoviePartPresenterImpl
 import kz.movieapp.moviedb.movie.nowplaying.NowPlaying
@@ -25,11 +27,6 @@ import kz.movieapp.moviedb.movie.upcoming.UpcomingPresenterImpl
 
 @Module
 class MovieModule {
-//    @Provides
-//    fun provideMainPresenter(movieInteractor: MovieInteractor): NowPlayingPresenter {
-//        return NowPlayingPresenterImpl(movieInteractor, null)
-//    }
-
     @Provides
     @AppScope
     fun provideMainInteractor(api : MovieDbApi): MovieInteractor {
@@ -74,5 +71,9 @@ class MovieModule {
         return GenrePartPresenterImpl(movieInteractor, null)
     }
 
+    @Provides
+    fun provideMovieFilterPresenter(movieInteractor: MovieInteractor): MovieFilterPresenter {
+        return MovieFilterPresenterImpl(movieInteractor, null)
+    }
 
 }

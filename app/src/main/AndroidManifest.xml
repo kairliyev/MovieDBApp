@@ -15,7 +15,9 @@
 			android:theme="@style/AppTheme"
 			android:usesCleartextTraffic="true"
 			tools:ignore="GoogleAppIndexingWarning">
-		<activity android:name=".movie.moviefilter.MovieFilterActivity">
+		<activity android:name=".movie.moviefilter.activity.MovieFilterActivity"
+		          android:launchMode="singleTop"
+		          android:theme="@style/AppTheme.NoActionBar">
 		</activity>
 		<activity
 				android:name=".movie.genre.activity.GenreActivity"
@@ -44,12 +46,9 @@
 			<meta-data
 					android:name="android.app.searchable"
 					android:resource="@xml/searchable"/>
-
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH"/>
 			</intent-filter>
-		</activity>
-		<activity android:name=".MainActivity">
 		</activity>
 	</application>
 

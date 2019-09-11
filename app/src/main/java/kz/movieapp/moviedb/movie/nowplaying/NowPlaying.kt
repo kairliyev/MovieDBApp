@@ -11,10 +11,8 @@ import kotlinx.android.synthetic.main.fragment_now_playing.*
 import kz.movieapp.moviedb.App
 
 import kz.movieapp.moviedb.R
-import kz.movieapp.moviedb.models.Movie
+import kz.movieapp.moviedb.models.response.MovieResponse
 import kz.movieapp.moviedb.movie.MovieAdapter
-import kz.movieapp.moviedb.movie.upcoming.UpcomingPresenter
-import kz.movieapp.moviedb.movie.upcoming.UpcomingView
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,7 +24,8 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class NowPlaying : Fragment(), NowPlayingView {
+class NowPlaying(internal var from: String,internal var to: String, internal var request: String) : Fragment(), NowPlayingView {
+
 
     @Inject
     lateinit var presenter: NowPlayingPresenter
@@ -47,7 +46,7 @@ class NowPlaying : Fragment(), NowPlayingView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initLayout()
-        presenter.setView(this)
+        presenter.setView(this, from, to, request)
     }
 
     override fun onDestroyView() {
@@ -64,8 +63,8 @@ class NowPlaying : Fragment(), NowPlayingView {
         list_movie.adapter = MovieAdapter(context)
     }
 
-    override fun showNowPlayingMovies(movies: ArrayList<Movie>?) {
+    override fun showFilteredMovies(movieResponse: MovieResponse?) {
         progress_bar.visibility = View.GONE
-        (list_movie.adapter as MovieAdapter).addMovies(movies)
+        (list_movie.adapter as MovieAdapter).addMovies(movieResponse?.movies)
     }
 }

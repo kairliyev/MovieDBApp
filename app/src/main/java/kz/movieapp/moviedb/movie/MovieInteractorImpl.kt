@@ -33,6 +33,10 @@ class MovieInteractorImpl(private val movieDbApi: MovieDbApi) : MovieInteractor 
         return movieDbApi.getGenreFilter(createGenreFilterQueryMap(id))
     }
 
+    override fun getMovieFilter(from: String, to: String, request: String): Observable<MovieResponse> {
+        return movieDbApi.getGenreFilter(createMovieFilterQueryMap(from,to,request))
+    }
+
     fun createGenreListQueryMap(): Map<String, String> {
         return hashMapOf(
             "language" to "ru"
@@ -43,6 +47,15 @@ class MovieInteractorImpl(private val movieDbApi: MovieDbApi) : MovieInteractor 
         return hashMapOf(
             "language" to "ru",
             "with_genres" to id,
+            "sort_by" to "popularity.desc"
+        )
+    }
+    fun createMovieFilterQueryMap(from: String, to: String, request: String): Map<String, String> {
+        return hashMapOf(
+            "primary_release_date.gte" to from,
+            "primary_release_date.lte" to to,
+            "language" to "ru",
+            "with_genres" to request,
             "sort_by" to "popularity.desc"
         )
     }

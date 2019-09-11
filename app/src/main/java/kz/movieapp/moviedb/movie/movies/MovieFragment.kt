@@ -34,7 +34,6 @@ class MovieFragment : Fragment(), MoviePartView {
     lateinit var presenter: MoviePartPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("MF", "onCreate")
         (context?.applicationContext as App).createMainComponent().inject(this)
         super.onCreate(savedInstanceState)
     }
@@ -43,14 +42,11 @@ class MovieFragment : Fragment(), MoviePartView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("MF", "onCreateView")
-
         return inflater.inflate(R.layout.fragment_movie, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("MF", "onViewCreated")
         presenter.setView(this)
     }
 

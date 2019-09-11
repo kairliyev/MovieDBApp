@@ -23,13 +23,12 @@ import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.app_bar_nav.*
 import kotlinx.android.synthetic.main.nav_header_nav.*
 import kz.movieapp.moviedb.models.User
-
 import kz.movieapp.moviedb.movie.favorites.FavoriteFragment
 import kz.movieapp.moviedb.movie.genre.GenreFragment
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilter
 import kz.movieapp.moviedb.movie.latestmovie.LatestMovie
+import kz.movieapp.moviedb.movie.moviefilter.MovieFilterFragment
 import kz.movieapp.moviedb.movie.movies.MovieFragment
-import kz.movieapp.moviedb.movie.movies.adapters.ViewPagerAdapter
 import kz.movieapp.moviedb.movie.nowplaying.NowPlaying
 import kz.movieapp.moviedb.movie.popularmovies.PopularMovies
 import kz.movieapp.moviedb.movie.upcoming.UpcomingFragment
@@ -163,6 +162,9 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             R.id.genre_item -> {
                 loadGenreFragment(savedState)
             }
+            R.id.filter -> {
+                loadFilterFragment(savedState)
+            }
 
 
 //            R.id.fav -> {
@@ -206,6 +208,16 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 .commit()
         }
     }
+
+    private fun loadFilterFragment(savedState: Bundle?) {
+        if (savedState == null) {
+            toolbar_genre?.title = "Фильтр"
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_container, MovieFilterFragment(), MovieFilterFragment::class.simpleName)
+                .commit()
+        }
+    }
 //    private fun loadPlayingFragment(savedInstanceState: Bundle?) {
 //        if (savedInstanceState == null) {
 //            supportFragmentManager
@@ -224,14 +236,6 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
     }
 
-    private fun loadNowPlayingFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.main_container, NowPlaying(), NowPlaying::class.simpleName)
-                .commit()
-        }
-    }
 
     private fun loadPopularMoviesFragment(savedInstanceState: Bundle?) {
 
