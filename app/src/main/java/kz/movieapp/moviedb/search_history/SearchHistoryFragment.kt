@@ -67,7 +67,7 @@ class SearchHistoryFragment(internal var query: String) : Fragment(), SearchHist
 
         if (query.isEmpty()) {
             val list: List<Movie> = mapHistory.map { it.value }
-            (search_history_list.adapter as SearchHistoryAdapter).addMovies(list)
+            (search_history_list.adapter as SearchHistoryAdapter).addMovies(list.reversed())
         } else {
             presenter.searchMovie(this, query)
         }
