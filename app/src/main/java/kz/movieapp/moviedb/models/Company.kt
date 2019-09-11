@@ -5,6 +5,10 @@ data class Company(
     val logo_path: String
 ) {
     fun getCompanyLogoUrl(): String {
-        return "http://image.tmdb.org/t/p/w342$logo_path"
+        if(logo_path == null){
+            return "https://image.freepik.com/free-vector/404_8024-4.jpg"
+        } else {
+            return "http://image.tmdb.org/t/p/w500$logo_path"
+        }
     }
 }

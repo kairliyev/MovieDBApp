@@ -51,7 +51,7 @@ class LatestMovie : Fragment(), LatestMovieView {
         list_movie.adapter = MovieAdapter(context)
     }
 
-    override fun showLatestMovie(movies: List<Movie>?) {
+    override fun showLatestMovie(movies: ArrayList<Movie>?) {
         progress_bar.visibility = View.GONE
         (list_movie.adapter as MovieAdapter).addMovies(movies)
 

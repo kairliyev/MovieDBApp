@@ -52,7 +52,7 @@ class FavoriteFragment : Fragment(), FavoriteFragmentView {
         list_movie.adapter = MovieAdapterFavorite(context)
     }
 
-    override fun showFavoriteFragmentMovies(movies: List<Movie>) {
+    override fun showFavoriteFragmentMovies(movies: ArrayList<Movie>) {
         progress_bar.visibility = View.GONE
         (list_movie.adapter as MovieAdapterFavorite).addMovies(movies)
     }

@@ -1,12 +1,17 @@
 package kz.movieapp.moviedb.detail
 
 import kz.movieapp.moviedb.api.MovieDbApi
-import kz.movieapp.moviedb.api.VideoResponse
+import kz.movieapp.moviedb.models.response.VideoResponse
 import kz.movieapp.moviedb.models.MovieDetail
+import kz.movieapp.moviedb.models.response.MovieResponse
 import kz.movieapp.moviedb.utils.Language
 import rx.Observable
 
 class DetailInteractorImpl(private val movieDbApi: MovieDbApi): DetailInteractor{
+    override fun getSimilarMovies(id: String): Observable<MovieResponse> {
+        return movieDbApi.getSimilarMovies(id, createQueryMap())
+    }
+
     override fun getMovieVideos(id: String): Observable<VideoResponse> {
         return movieDbApi.getMovieVideos(id)
     }
@@ -18,7 +23,7 @@ class DetailInteractorImpl(private val movieDbApi: MovieDbApi): DetailInteractor
 
     private fun createQueryMap(): Map<String, String>{
         return hashMapOf(
-            "language" to Language.language
+            "language" to "ru"
         )
     }
 }

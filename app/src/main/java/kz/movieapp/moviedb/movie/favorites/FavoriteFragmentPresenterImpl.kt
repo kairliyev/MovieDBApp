@@ -1,8 +1,5 @@
 package kz.movieapp.moviedb.movie.favorites
 
-import android.util.Log
-import kz.movieapp.moviedb.api.MovieResponse
-import kz.movieapp.moviedb.movie.MovieInteractor
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase

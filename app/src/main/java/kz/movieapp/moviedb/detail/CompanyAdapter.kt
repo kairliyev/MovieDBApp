@@ -1,5 +1,6 @@
 package kz.movieapp.moviedb.detail
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,9 +36,7 @@ class CompanyAdapter : RecyclerView.Adapter<CompanyAdapter.ViewHolder>() {
     inner class ViewHolder(root: View) : RecyclerView.ViewHolder(root) {
 
         fun bind(company: Company) = with(itemView) {
-//            company_name?.text = company.name
             Glide.with(this).load(company.getCompanyLogoUrl()).into(company_logo_image)
-
         }
     }
 }

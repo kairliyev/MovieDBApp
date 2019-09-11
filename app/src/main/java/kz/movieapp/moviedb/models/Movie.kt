@@ -9,6 +9,6 @@ data class Movie(
 ) {
     constructor() : this("", "", "")
     fun getPosterUrl(): String {
-        return "http://image.tmdb.org/t/p/w342$posterPath"
+        return "http://image.tmdb.org/t/p/w500$posterPath"
     }
 }

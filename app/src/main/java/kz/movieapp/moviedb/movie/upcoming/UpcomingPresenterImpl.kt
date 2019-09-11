@@ -1,20 +1,23 @@
 package kz.movieapp.moviedb.movie.upcoming
 
 import android.util.Log
-import kz.movieapp.moviedb.api.MovieResponse
+import kz.movieapp.moviedb.models.response.MovieResponse
 import kz.movieapp.moviedb.movie.MovieInteractor
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class UpcomingPresenterImpl(private val interactor: MovieInteractor, private var view: UpcomingView?): UpcomingPresenter {
 
+    override fun loadMore(page: Int) {
+        getNowPlayingMovies(page)
+    }
     override fun setView(nowPlayingView: UpcomingView) {
         view = nowPlayingView
-        getNowPlayingMovies()
+        getNowPlayingMovies(1)
     }
 
-    private fun getNowPlayingMovies(){
-        interactor.getUpcomingMovies()
+    private fun getNowPlayingMovies(page: Int){
+        interactor.getUpcomingMovies(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

@@ -7,14 +7,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,13 +25,16 @@ import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.app_bar_nav.*
 import kotlinx.android.synthetic.main.nav_header_nav.*
 import kz.movieapp.moviedb.models.User
-import kz.movieapp.moviedb.movie.MovieGenre
 import kz.movieapp.moviedb.movie.favorites.FavoriteFragment
+import kz.movieapp.moviedb.movie.genre.GenreFragment
 import kz.movieapp.moviedb.movie.genrefilter.GenreFilter
 import kz.movieapp.moviedb.movie.latestmovie.LatestMovie
+import kz.movieapp.moviedb.movie.moviefilter.MovieFilterFragment
+import kz.movieapp.moviedb.movie.movies.MovieFragment
 import kz.movieapp.moviedb.movie.nowplaying.NowPlaying
 import kz.movieapp.moviedb.movie.popularmovies.PopularMovies
 import kz.movieapp.moviedb.movie.upcoming.UpcomingFragment
+import kz.movieapp.moviedb.search_history.SearchHistoryFragment
 import kz.movieapp.moviedb.utils.Language
 
 
@@ -49,23 +53,19 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         savedState = savedInstanceState
 
         setContentView(R.layout.activity_nav)
-        setSupportActionBar(toolbar)
-        loadUpcomingFragment(savedInstanceState)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        setSupportActionBar(toolbar_genre)
+        loadMoviesFragment(savedInstanceState)
         uid = FirebaseAuth.getInstance().uid
         fetchUsers()
 
-
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout, toolbar_genre, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
 //        handleIntent(intent)
     }
 
@@ -84,7 +84,6 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                         Log.d("Profile", username)
                     }
                 }
-
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -103,22 +102,20 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         super.onNewIntent(intent)
         if (Intent.ACTION_SEARCH == intent?.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
-            searchByGenre(query, savedState)
+            searchByWord(query, savedState)
             Toast.makeText(applicationContext, query, Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun searchByGenre(query: String?, savedState: Bundle?) {
-        if (savedState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.main_container, GenreFilter(), GenreFilter::class.simpleName)
-                .commit()
-
-            var arr: HashMap<String, String> = hashMapOf("with_genres" to query!!)
-            MovieGenre.movieMap = arr
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        if (id == android.R.id.home) {
+            Log.d("NavActivity", "Home sweet home ")
+            onBackPressed()
+            return true
         }
 
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
@@ -134,48 +131,62 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         menuInflater.inflate(R.menu.nav, menu)
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.search).actionView as SearchView).apply {
+        (menu.findItem(R.id.search_history_btn).actionView as SearchView).apply {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            setOnSearchClickListener {
+                searchByWord("",savedState)
+            }
+            setOnCloseListener {
+                loadMoviesFragment(savedState)
+                return@setOnCloseListener false
+            }
         }
 
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            R.id.action28 -> {
-                loadPopularMoviesFragmentToChangeLanguage(savedState)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
-                loadUpcomingFragment(savedState)
+            R.id.movies_item -> {
+                loadMoviesFragment(savedState)
             }
-            R.id.nav_gallery -> {
-                loadNowPlayingFragment(savedState)
+            R.id.genre_item -> {
+                loadGenreFragment(savedState)
             }
-            R.id.nav_slideshow -> {
-                loadPopularMoviesFragment(savedState)
+            R.id.filter -> {
+                loadFilterFragment(savedState)
             }
-            R.id.nav_manage -> {
-                loadLatestMovieFragment(savedState)
-            }
-            R.id.fav -> {
-                loadFavoriteMovieFragment(savedState)
-            }
-            R.id.nav_send -> {
-
-            }
+//            R.id.search_history_btn ->{
+//                Log.d("search", "SEARCHHHHH")
+//                searchByWord(savedState)
+//            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun loadGenreFragment(savedState: Bundle?) {
+        if (savedState == null) {
+            toolbar_genre?.title = "Жанры"
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_container, GenreFragment(), GenreFragment::class.simpleName)
+                .commit()
+        }
+
+    }
+
+    private fun loadMoviesFragment(savedState: Bundle?) {
+        if (savedState == null) {
+            toolbar_genre?.title = "Фильмы"
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_container, MovieFragment(), MovieFragment::class.simpleName)
+                .commit()
+        }
     }
 
     private fun loadFavoriteMovieFragment(savedState: Bundle?) {
@@ -186,61 +197,25 @@ class NavActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 .commit()
         }
     }
-//    private fun loadPlayingFragment(savedInstanceState: Bundle?) {
-//        if (savedInstanceState == null) {
-//            supportFragmentManager
-//                .beginTransaction()
-//                .replace(R.id.main_container, NowPlayingFragment(), NowPlayingFragment::class.simpleName)
-//                .commit()
-//        }
-//    }
 
-    private fun loadUpcomingFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
+    private fun loadFilterFragment(savedState: Bundle?) {
+        if (savedState == null) {
+            toolbar_genre?.title = "Фильтр"
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_container, UpcomingFragment(), UpcomingFragment::class.simpleName)
-                .commit()
-        }
-    }
-
-    private fun loadNowPlayingFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.main_container, NowPlaying(), NowPlaying::class.simpleName)
-                .commit()
-        }
-    }
-
-    private fun loadPopularMoviesFragment(savedInstanceState: Bundle?) {
-
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.main_container, PopularMovies(), PopularMovies::class.simpleName)
-                .commit()
-        }
-    }
-
-    private fun loadPopularMoviesFragmentToChangeLanguage(savedInstanceState: Bundle?) {
-
-        if (savedInstanceState == null) {
-            Language.language = "ru"
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.main_container, PopularMovies(), PopularMovies::class.simpleName)
+                .replace(R.id.main_container, MovieFilterFragment(), MovieFilterFragment::class.simpleName)
                 .commit()
         }
     }
 
 
-    private fun loadLatestMovieFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
+    private fun searchByWord(query: String,savedState: Bundle?) {
+        if (savedState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_container, LatestMovie(), LatestMovie::class.simpleName)
+                .replace(R.id.main_container, SearchHistoryFragment(query), SearchHistoryFragment::class.simpleName)
                 .commit()
         }
+
     }
 }
