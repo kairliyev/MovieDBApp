@@ -3,6 +3,7 @@ package kz.movieapp.moviedb.detail
 import android.util.Log
 import kz.movieapp.moviedb.models.response.VideoResponse
 import kz.movieapp.moviedb.models.MovieDetail
+import kz.movieapp.moviedb.models.response.MovieResponse
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
@@ -12,8 +13,29 @@ class DetailPresenterImpl(val interactor: DetailInteractor, private var view: De
         view = mainView
         getMovieDetails(id)
         getMovieVideos(id)
+        getSimilarMovies(id)
     }
 
+    private fun getSimilarMovies(id: String) {
+        interactor.getSimilarMovies(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { response -> onGetSimilarMoviesSuccess(response)},
+                { e -> onGetSimilarMoviesFailure(e) }
+            )
+    }
+
+    private fun onGetSimilarMoviesFailure(e: Throwable?) {
+
+    }
+
+    private fun onGetSimilarMoviesSuccess(response: MovieResponse?) {
+        view?.showSimilarMovies(response)
+    }
+
+
+    //
     private fun getMovieDetails(id: String){
         interactor.getMovieDetails(id)
             .subscribeOn(Schedulers.io())

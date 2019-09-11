@@ -35,4 +35,7 @@ interface MovieDbApi {
 
     @GET("movie/{movie_id}/videos")
     fun getMovieVideos(@Path("movie_id") id: String): Observable<VideoResponse>
+
+    @GET("movie/{movie_id}/similar")
+    fun getSimilarMovies(@Path("movie_id") id: String): Observable<MovieResponse>
 }

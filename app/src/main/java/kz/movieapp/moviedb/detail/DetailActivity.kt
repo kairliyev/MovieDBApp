@@ -22,6 +22,7 @@ import kz.movieapp.moviedb.R
 import kz.movieapp.moviedb.models.Company
 import kz.movieapp.moviedb.models.MovieDetail
 import kz.movieapp.moviedb.models.Videos
+import kz.movieapp.moviedb.models.response.MovieResponse
 import java.util.*
 import javax.inject.Inject
 
@@ -81,6 +82,10 @@ class DetailActivity : AppCompatActivity(), DetailView {
         }
     }
 
+    override fun showSimilarMovies(movies: MovieResponse?) {
+        (similar_movies_list.adapter as SimilarMoviesAdapter).addMovies(movies?.movies)
+    }
+
     private fun initLayout() {
         company_list.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -88,7 +93,11 @@ class DetailActivity : AppCompatActivity(), DetailView {
         company_list.setHasFixedSize(true)
         company_list.adapter = CompanyAdapter()
 
-
+        similar_movies_list.setHasFixedSize(true)
+        val layoutManagerSimilarMovies = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        similar_movies_list.layoutManager = layoutManagerSimilarMovies
+        similar_movies_list.setHasFixedSize(true)
+        similar_movies_list.adapter = SimilarMoviesAdapter()
     }
 
     private fun saveMovieToDatabase(movies: MovieDetail?) {

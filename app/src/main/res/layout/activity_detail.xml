@@ -11,7 +11,7 @@
             android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerInParent="true"/>
 
     <ScrollView
             android:layout_width="match_parent"
@@ -110,12 +110,20 @@
                     android:layout_width="20dp"
                     android:layout_height="2dp"
                     android:background="@color/colorPrimary"/>
-
             <TextView
-                    android:id="@+id/overview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="18sp"
+                    android:text="Cюжет"/>
+            <TextView
+                    android:id="@+id/overview"
+                    android:text="Проходит 27 лет после первой встречи ребят с демоническим Пеннивайзом. Они уже выросли, и у каждого своя жизнь. Но неожиданно их спокойное существование нарушает странный телефонный звонок, который заставляет их вновь собраться вместе."
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
                     android:textSize="16sp"/>
 
             <LinearLayout
@@ -136,9 +144,31 @@
                         <!--android:id="@+id/add_fav"/>-->
 
             </LinearLayout>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="18sp"
+                    android:text="Компании"/>
             <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:id="@+id/company_list"
+                    android:orientation="vertical"
+                    android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="18sp"
+                    android:text="Похожие фильмы"/>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/similar_movies_list"
                     android:orientation="vertical"
                     android:layout_height="match_parent">
             </androidx.recyclerview.widget.RecyclerView>
